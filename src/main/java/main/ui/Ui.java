@@ -2,9 +2,11 @@ package main.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import main.tables.Form;
+import main.entity.Form;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +30,16 @@ public class Ui {
         while (true) {
             System.out.print("type: ");
             String type = scanner.nextLine();
-            if (!type.equalsIgnoreCase("aspirant") && !type.equalsIgnoreCase("bachelor")) {
+            int diplomaId = 0;
+            String studentIdentifyCard = "";
+            if (type.equalsIgnoreCase("aspirant")) {
+                System.out.print("DiplomaId:");
+                diplomaId = scanner.nextInt();
+                scanner.nextLine();
+            } else if (type.equalsIgnoreCase("bachelor")) {
+                System.out.print("StudentIdentifyCard:");
+                studentIdentifyCard = scanner.nextLine();
+            } else {
                 System.out.println("можна вибрати лише aspirant чи bachelor");
                 continue;
             }
@@ -36,12 +47,22 @@ public class Ui {
             String name = scanner.nextLine();
             System.out.print("surname: ");
             String surname = scanner.nextLine();
-            System.out.print("email: ");
-            String email = scanner.nextLine();
+            Matcher matcher;
+            String email;
+            do {
+                System.out.print("email: ");
+                email = scanner.nextLine();
+                String regex = "[a-zA-Z0-9]{4,15}@[a-zA-Z]{2,10}.[a-zA-Z]{2,5}";
+                Pattern pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(email);
+                if (!matcher.matches()) {
+                    System.out.println("email isn't correct");
+                    System.out.println("email must be like: 'name@gmail.com'");
+                }
+            } while (!matcher.matches());
             System.out.print("course: ");
             Integer course = scanner.nextInt();
-            System.out.println(course);
-            return new Form(type, name, surname, email, course);
+            return new Form(type, name, surname, email, course, diplomaId, studentIdentifyCard);
         }
     }
 

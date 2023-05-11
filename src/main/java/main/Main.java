@@ -1,7 +1,7 @@
 package main;
 
-import main.repositories.StudentRepository;
-import main.tables.Student;
+import main.entity.Student;
+import main.repository.StudentRepository;
 import main.ui.Ui;
 
 import java.io.BufferedReader;
@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -38,7 +37,7 @@ public class Main {
 
             Ui ui = new Ui(new Scanner(System.in));
 
-            List<Student> students = new ArrayList<>();
+            List<Student> students;
             int m;
             while ((m = ui.menu()) != 0) {
                 switch (m) {

@@ -1,9 +1,16 @@
-package main.tables;
+package main.entity;
 
 import lombok.Data;
 
 @Data
 public abstract class Student {
+    private Integer id;
+    private String type;
+    private String name;
+    private String surname;
+    private String email;
+    private Integer course;
+
     public Student() {
     }
 
@@ -15,13 +22,6 @@ public abstract class Student {
         this.email = email;
         this.course = course;
     }
-
-    private Integer id;
-    private String type;
-    private String name;
-    private String surname;
-    private String email;
-    private Integer course;
 
     abstract public void show();
 }
