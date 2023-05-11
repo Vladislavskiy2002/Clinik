@@ -39,7 +39,7 @@ public class StudentService {
                 Integer diploma_id = aspirantService.findDiplomaIdFromDb(id,connection);
                 students.add(new StudentAspirant(id, type, name, surname, email, course, diploma_id));
             } else if (type.equalsIgnoreCase("bachelor")) {
-                String studentIdentifyCard = bachelorService.findStudent_identify_cardFromDb(id,connection);
+                String studentIdentifyCard = bachelorService.findStudentIdentifyCardFromDb(id,connection);
                 students.add(new StudentBachelor(id, type, name, surname, email, course, studentIdentifyCard));
             }
         }
