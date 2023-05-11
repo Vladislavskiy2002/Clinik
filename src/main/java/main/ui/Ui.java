@@ -3,6 +3,7 @@ package main.ui;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import main.entity.Form;
+import main.validation.ValidateStudent;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -27,43 +28,15 @@ public class Ui {
     }
 
     public Form inputStudentData() {
-        while (true) {
-            System.out.print("type: ");
-            String type = scanner.nextLine();
-            int diplomaId = 0;
-            String studentIdentifyCard = "";
-            if (type.equalsIgnoreCase("aspirant")) {
-                System.out.print("DiplomaId:");
-                diplomaId = scanner.nextInt();
-                scanner.nextLine();
-            } else if (type.equalsIgnoreCase("bachelor")) {
-                System.out.print("StudentIdentifyCard:");
-                studentIdentifyCard = scanner.nextLine();
-            } else {
-                System.out.println("можна вибрати лише aspirant чи bachelor");
-                continue;
-            }
+            Form form = ValidateStudent.validateType(scanner);
             System.out.print("name: ");
             String name = scanner.nextLine();
             System.out.print("surname: ");
             String surname = scanner.nextLine();
-            Matcher matcher;
-            String email;
-            do {
-                System.out.print("email: ");
-                email = scanner.nextLine();
-                String regex = "[a-zA-Z0-9]{4,15}@[a-zA-Z]{2,10}.[a-zA-Z]{2,5}";
-                Pattern pattern = Pattern.compile(regex);
-                matcher = pattern.matcher(email);
-                if (!matcher.matches()) {
-                    System.out.println("email isn't correct");
-                    System.out.println("email must be like: 'name@gmail.com'");
-                }
-            } while (!matcher.matches());
+            String email = ValidateStudent.validateEmail(scanner);
             System.out.print("course: ");
             Integer course = scanner.nextInt();
-            return new Form(type, name, surname, email, course, diplomaId, studentIdentifyCard);
-        }
+            return new Form(form.getType(), name, surname, email, course, form.getDiplomaID(), form.getStudentIdentifyCard());
     }
 
     public Form findStudentsData() {
