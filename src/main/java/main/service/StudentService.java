@@ -12,6 +12,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class StudentService {
+
+    private StudentBachelorService bachelorService;
+    private StudentAspirantService aspirantService;
+
+    public StudentService() {
+        this.bachelorService = new StudentBachelorService();
+        this.aspirantService = new StudentAspirantService();
+    }
+
     public void addAspirantAndBachelorStudentsToListFromResultSet(ResultSet resultSet, Connection connection, List<Student> students) throws SQLException {
         while (true) {
             try {
@@ -58,31 +67,9 @@ public class StudentService {
             preparedStatement.setInt(5, form.getCourse());
             preparedStatement.executeUpdate();
             if (form.getType().equalsIgnoreCase("aspirant")) {
-                String selectQuery = "SELECT id from student where email = ?";
-                PreparedStatement preparedStatement2 = connection.prepareStatement(selectQuery);
-                preparedStatement2.setString(1, form.getEmail());
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-                int id = 0;
-                if (resultSet2.next()) {
-                    id = resultSet2.getInt("id");
-                }
-                preparedStatement2 = connection.prepareStatement("insert into student_aspirant(student_id, diploma_id) VALUES (?,?)");
-                preparedStatement2.setInt(1, id);
-                preparedStatement2.setInt(2, form.getDiplomaID());
-                preparedStatement2.executeUpdate();
+                aspirantService.addStudentsToDb(form,connection);
             } else if (form.getType().equalsIgnoreCase("bachelor")) {
-                String selectQuery = "SELECT id from student where email = ?";
-                PreparedStatement preparedStatement2 = connection.prepareStatement(selectQuery);
-                preparedStatement2.setString(1, form.getEmail());
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-                int id = 0;
-                if (resultSet2.next()) {
-                    id = resultSet2.getInt("id");
-                }
-                preparedStatement2 = connection.prepareStatement("insert into student_bachelor(student_id, student_identify_card) VALUES (?,?)");
-                preparedStatement2.setInt(1, id);
-                preparedStatement2.setString(2, form.getStudentIdentifyCard());
-                preparedStatement2.executeUpdate();
+                bachelorService.addStudentsToDb(form,connection);
             }
 
             return true;
