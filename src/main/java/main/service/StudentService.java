@@ -36,22 +36,10 @@ public class StudentService {
             Integer course = resultSet.getInt("course");
 
             if (type.equalsIgnoreCase("aspirant")) {
-                PreparedStatement preparedStatement2 = connection.prepareStatement("select diploma_id from student_aspirant where student_id = ?");
-                preparedStatement2.setInt(1, id);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-                int diploma_id = 0;
-                if (resultSet2.next()) {
-                    diploma_id = resultSet2.getInt("diploma_id");
-                }
+                Integer diploma_id = aspirantService.findDiplomaIdFromDb(id,connection);
                 students.add(new StudentAspirant(id, type, name, surname, email, course, diploma_id));
             } else if (type.equalsIgnoreCase("bachelor")) {
-                PreparedStatement preparedStatement2 = connection.prepareStatement("select student_identify_card from student_bachelor where student_id = ?");
-                preparedStatement2.setInt(1, id);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
-                String studentIdentifyCard = "";
-                if (resultSet2.next()) {
-                    studentIdentifyCard = resultSet2.getString("student_identify_card");
-                }
+                String studentIdentifyCard = bachelorService.findStudent_identify_cardFromDb(id,connection);
                 students.add(new StudentBachelor(id, type, name, surname, email, course, studentIdentifyCard));
             }
         }

@@ -22,4 +22,15 @@ public class StudentBachelorService {
         preparedStatement2.setString(2, form.getStudentIdentifyCard());
         preparedStatement2.executeUpdate();
     }
+
+    public String findStudent_identify_cardFromDb(Integer id, Connection connection) throws SQLException {
+        PreparedStatement preparedStatement2 = connection.prepareStatement("select student_identify_card from student_bachelor where student_id = ?");
+        preparedStatement2.setInt(1, id);
+        ResultSet resultSet2 = preparedStatement2.executeQuery();
+        String studentIdentifyCard = "";
+        if (resultSet2.next()) {
+            studentIdentifyCard = resultSet2.getString("student_identify_card");
+        }
+        return studentIdentifyCard;
+    }
 }

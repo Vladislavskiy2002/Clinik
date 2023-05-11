@@ -22,4 +22,14 @@ public class StudentAspirantService {
         preparedStatement2.setInt(2, form.getDiplomaID());
         preparedStatement2.executeUpdate();
     }
+    public Integer findDiplomaIdFromDb(Integer id, Connection connection) throws SQLException {
+        PreparedStatement preparedStatement2 = connection.prepareStatement("select diploma_id from student_aspirant where student_id = ?");
+        preparedStatement2.setInt(1, id);
+        ResultSet resultSet2 = preparedStatement2.executeQuery();
+        int diploma_id = 0;
+        if (resultSet2.next()) {
+            diploma_id = resultSet2.getInt("diploma_id");
+        }
+        return diploma_id;
+    }
 }
