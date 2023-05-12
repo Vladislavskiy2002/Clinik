@@ -54,12 +54,6 @@ public class StudentService {
             preparedStatement.setString(4, form.getEmail());
             preparedStatement.setInt(5, form.getCourse());
             preparedStatement.executeUpdate();
-//            if (form.getType().equalsIgnoreCase("aspirant")) {
-//                aspirantService.addStudentsToDb(form,connection);
-//            } else if (form.getType().equalsIgnoreCase("bachelor")) {
-//                bachelorService.addStudentsToDb(form,connection);
-//            }
-
             return true;
         }
     }

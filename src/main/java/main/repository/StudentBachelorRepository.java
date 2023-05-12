@@ -21,6 +21,6 @@ public class StudentBachelorRepository extends StudentRepository{
     }
 
     public boolean addStudent(Form form) throws SQLException {
-        return service.addStudentsToDb(form,getConnection());
+        return service.addStudentBachelorToDb(form,getConnection());
     }
 }

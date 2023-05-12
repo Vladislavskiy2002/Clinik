@@ -18,6 +18,6 @@ public class StudentAspirantRepository extends StudentRepository {
     }
 
     public boolean addStudent(Form form) throws SQLException {
-        return service.addStudentsToDb(form, getConnection());
+        return service.addStudentAspirantToDb(form, getConnection());
     }
 }

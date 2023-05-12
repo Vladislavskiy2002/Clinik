@@ -9,21 +9,21 @@ import java.sql.SQLException;
 
 public class StudentAspirantService {
 
-    public boolean addStudentsToDb(Form form, Connection connection) throws SQLException {
+    public boolean addStudentAspirantToDb(Form form, Connection connection) throws SQLException {
         StudentService studentService = new StudentService();
         studentService.addStudentsToDb(form,connection);
         String selectQuery = "SELECT id from student where email = ?";
-        PreparedStatement preparedStatement2 = connection.prepareStatement(selectQuery);
-        preparedStatement2.setString(1, form.getEmail());
-        ResultSet resultSet2 = preparedStatement2.executeQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+        preparedStatement.setString(1, form.getEmail());
+        ResultSet resultSet = preparedStatement.executeQuery();
         int id = 0;
-        if (resultSet2.next()) {
-            id = resultSet2.getInt("id");
+        if (resultSet.next()) {
+            id = resultSet.getInt("id");
         }
-        preparedStatement2 = connection.prepareStatement("insert into student_aspirant(student_id, diploma_id) VALUES (?,?)");
-        preparedStatement2.setInt(1, id);
-        preparedStatement2.setInt(2, form.getDiplomaID());
-        preparedStatement2.executeUpdate();
+        preparedStatement = connection.prepareStatement("insert into student_aspirant(student_id, diploma_id) VALUES (?,?)");
+        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(2, form.getDiplomaID());
+        preparedStatement.executeUpdate();
         return true;
     }
     public Integer findDiplomaIdFromDb(Integer id, Connection connection) throws SQLException {
