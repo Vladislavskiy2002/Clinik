@@ -29,13 +29,10 @@ public class Ui {
 
     public Form inputStudentData() {
             Form form = ValidateStudent.validateType(scanner);
-            System.out.print("name: ");
-            String name = scanner.nextLine();
-            System.out.print("surname: ");
-            String surname = scanner.nextLine();
+            String name = ValidateStudent.validateName(scanner);
+            String surname = ValidateStudent.validateSurname(scanner);
             String email = ValidateStudent.validateEmail(scanner);
-            System.out.print("course: ");
-            Integer course = scanner.nextInt();
+            Integer course = ValidateStudent.validateCourse(scanner);
             return new Form(form.getType(), name, surname, email, course, form.getDiplomaID(), form.getStudentIdentifyCard());
     }
 

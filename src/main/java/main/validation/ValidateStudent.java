@@ -12,16 +12,13 @@ public class ValidateStudent {
             String type ="";
             String studentIdentifyCard = "";
             Integer diplomaId = 0;
-            System.out.print("type: ");
+            System.out.print("Enter type: ");
             type = scanner.nextLine();
 
             if (type.equalsIgnoreCase("aspirant")) {
-                System.out.print("DiplomaId:");
-                diplomaId = scanner.nextInt();
-                scanner.nextLine();
+                diplomaId = validateDiplomaId(scanner);
             } else if (type.equalsIgnoreCase("bachelor")) {
-                System.out.print("StudentIdentifyCard:");
-                studentIdentifyCard = scanner.nextLine();
+                studentIdentifyCard = validateStudentIdentifyCard(scanner);
             } else {
                 System.out.println("можна вибрати лише aspirant чи bachelor");
                continue;
@@ -29,12 +26,77 @@ public class ValidateStudent {
             return new Form(type,diplomaId,studentIdentifyCard);
         }
     }
-
+    public static String validateName(Scanner scanner){
+        while(true) {
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            if (name.isEmpty()) {
+                System.out.println("the name must not be empty");
+            }
+            else
+                return name;
+        }
+    }
+    public static String validateSurname(Scanner scanner){
+        while(true) {
+            System.out.print("Enter surname: ");
+            String surname = scanner.nextLine();
+            if (surname.isEmpty()) {
+                System.out.println("the surname must not be empty");
+            }
+            else
+                return surname;
+        }
+    }
+    public static Integer validateCourse(Scanner scanner){
+        while(true) {
+            System.out.print("Enter course: ");
+            Integer course = scanner.nextInt();
+            scanner.nextLine();
+            if (course <= 0) {
+                System.out.println("the course must be greatest than 0");
+            }
+            else if (course >= 20) {
+                System.out.println("the course must be less or equal 20");
+            }
+            else
+                return course;
+        }
+    }
+    public static Integer validateDiplomaId(Scanner scanner){
+        while (true) {
+            System.out.print("Enter diplomaId:");
+            Integer diplomaId = scanner.nextInt();
+            scanner.nextLine();
+            if(diplomaId < 0)
+            {
+                System.out.println("diplomaId must be more than 0");
+            }
+            else if(diplomaId > 999999)
+            {
+                System.out.println("diplomaId must be less than 1000000");
+            }
+            else
+                return diplomaId;
+        }
+    }
+    public static String validateStudentIdentifyCard(Scanner scanner){
+        while (true) {
+            System.out.print("Enter StudentIdentifyCard:");
+            String studentIdentifyCard = scanner.nextLine();
+            if(studentIdentifyCard.isEmpty())
+            {
+                System.out.println("must not be empty'");
+            }
+            else
+                return studentIdentifyCard;
+        }
+    }
     public static String validateEmail(Scanner scanner){
         String email;
         Matcher matcher;
         do {
-            System.out.print("email: ");
+            System.out.print("Enter email: ");
             email = scanner.nextLine();
             String regex = "[a-zA-Z0-9]{4,15}@[a-zA-Z]{2,10}.[a-zA-Z]{2,5}";
             Pattern pattern = Pattern.compile(regex);
