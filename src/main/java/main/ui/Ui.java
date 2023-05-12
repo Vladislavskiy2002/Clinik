@@ -37,13 +37,9 @@ public class Ui {
     }
 
     public Form findStudentsData() {
-        System.out.print("name: ");
-        String name = scanner.nextLine();
-        System.out.print("surname: ");
-        String surname = scanner.nextLine();
-        System.out.print("course: ");
-        Integer course = scanner.nextInt();
-        System.out.println(course);
+        String name = ValidateStudent.validateName(scanner);
+        String surname = ValidateStudent.validateSurname(scanner);
+        Integer course = ValidateStudent.validateCourse(scanner);
         return new Form(name, surname, course);
     }
 }
