@@ -1,6 +1,10 @@
 package main;
 
+import main.entity.Form;
 import main.entity.Student;
+import main.entity.StudentBachelor;
+import main.repository.StudentAspirantRepository;
+import main.repository.StudentBachelorRepository;
 import main.repository.StudentRepository;
 import main.ui.Ui;
 
@@ -20,6 +24,11 @@ import static main.util.MyConstants.*;
 public class Main {
     private Scanner scanner;
     private StudentRepository studentRepository;
+    private StudentBachelorRepository studentBachelorRepository;
+    private StudentAspirantRepository studentAspirantRepository;
+
+    public Main() {
+    }
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -33,7 +42,9 @@ public class Main {
             Properties props = new Properties();
             props.load(reader);
             Connection connection = DriverManager.getConnection(props.getProperty("url"), props);
-            studentRepository = new StudentRepository(connection);
+            //studentRepository = new StudentRepository(connection);
+            studentBachelorRepository = new StudentBachelorRepository(connection);
+            studentAspirantRepository = new StudentAspirantRepository(connection);
 
             Ui ui = new Ui(new Scanner(System.in));
 
@@ -42,7 +53,19 @@ public class Main {
             while ((m = ui.menu()) != 0) {
                 switch (m) {
                     case ADD_STUDENT -> {
-                        studentRepository.addStudent(ui.inputStudentData());
+                        //studentRepository.addStudent(ui.inputStudentData());
+                        Form form = ui.inputStudentData();
+                        if(form.getType().equalsIgnoreCase("aspirant")) {
+                            studentRepository = new StudentAspirantRepository(connection);
+                            studentAspirantRepository.addStudent(form);
+                        }
+                        else if(form.getType().equalsIgnoreCase("bachelor")){
+                            studentRepository = new StudentBachelorRepository(connection);
+                            studentBachelorRepository.addStudent(form);
+                        }
+                        else{
+                            throw new RuntimeException();
+                        }
                     }
                     case SHOW_ALL_STUDENTS -> {
                         students = studentRepository.getAllStudents();

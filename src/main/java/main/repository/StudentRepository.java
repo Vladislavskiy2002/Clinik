@@ -1,5 +1,6 @@
 package main.repository;
 
+import lombok.Data;
 import main.entity.Form;
 import main.entity.Student;
 import main.service.StudentService;
@@ -8,21 +9,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRepository {
+@Data
+abstract public class StudentRepository {
     private Connection connection;
     private StudentService service;
-
-    public StudentRepository() {
-    }
 
     public StudentRepository(Connection connection) {
         this.connection = connection;
         this.service = new StudentService();
     }
 
-    public boolean addStudent(Form form) throws SQLException {
-        return service.addStudentsToDB(form, connection);
-    }
+    public abstract boolean addStudent(Form form) throws SQLException;
 
     public List<Student> getAllStudents() throws SQLException {
         Statement statement = connection.createStatement();

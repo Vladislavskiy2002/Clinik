@@ -19,7 +19,7 @@ public class StudentAspirant extends Student {
     public void show() {
         System.out.println("----------------------------");
         System.out.println("Information about student");
-        System.out.println("\tCurrent student is aspirant");
+        System.out.println("\tCurrent student is " + getType());
         System.out.println("\tName: " + getName());
         System.out.println("\tSurname: " + getSurname());
         System.out.println("\tEmail: " + getEmail());

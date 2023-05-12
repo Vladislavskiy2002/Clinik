@@ -8,7 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StudentAspirantService {
-    public void addStudentsToDb(Form form, Connection connection) throws SQLException {
+
+    public boolean addStudentsToDb(Form form, Connection connection) throws SQLException {
+        StudentService studentService = new StudentService();
+        studentService.addStudentsToDb(form,connection);
         String selectQuery = "SELECT id from student where email = ?";
         PreparedStatement preparedStatement2 = connection.prepareStatement(selectQuery);
         preparedStatement2.setString(1, form.getEmail());
@@ -21,6 +24,7 @@ public class StudentAspirantService {
         preparedStatement2.setInt(1, id);
         preparedStatement2.setInt(2, form.getDiplomaID());
         preparedStatement2.executeUpdate();
+        return true;
     }
     public Integer findDiplomaIdFromDb(Integer id, Connection connection) throws SQLException {
         PreparedStatement preparedStatement2 = connection.prepareStatement("select diploma_id from student_aspirant where student_id = ?");
