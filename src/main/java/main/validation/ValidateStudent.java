@@ -63,6 +63,18 @@ public class ValidateStudent {
                 return course;
         }
     }
+    public static Integer validateRes(Scanner scanner){
+        while(true) {
+            System.out.print("Enter course: ");
+            Integer res = scanner.nextInt();
+            scanner.nextLine();
+            if (res < 0 || res > 3) {
+                System.out.println("num must be 0 - 3");
+            }
+            else
+                return res;
+        }
+    }
     public static Integer validateDiplomaId(Scanner scanner){
         while (true) {
             System.out.print("Enter diplomaId:");

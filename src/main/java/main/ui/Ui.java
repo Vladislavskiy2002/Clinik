@@ -22,8 +22,7 @@ public class Ui {
                 ---------------
                 0. Exit
                 """);
-        int res = scanner.nextInt();
-        scanner.nextLine();
+        int res = ValidateStudent.validateRes(scanner);
         return res;
     }
 
