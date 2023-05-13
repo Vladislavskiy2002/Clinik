@@ -77,16 +77,10 @@ public class Ui {
                     studentBachelorRepository.getAllStudents().forEach(Student::show);
                 }
                 case SHOW_ASPIRANT_BY_FORM -> {
-                    students = studentAspirantRepository.getStudentsByForm(findStudentsData());
-                    for (Student student : students) {
-                        student.show();
-                    }
+                    studentAspirantRepository.getStudentsByForm(findStudentsData()).forEach(Student::show);
                 }
                 case SHOW_BACHELOR_BY_FORM -> {
-                    students = studentBachelorRepository.getStudentsByForm(findStudentsData());
-                    for (Student student : students) {
-                        student.show();
-                    }
+                    studentBachelorRepository.getStudentsByForm(findStudentsData()).forEach(Student::show);
                 }
             }
         }
