@@ -55,8 +55,7 @@ public class Ui {
         return new Form(name, surname, course);
     }
 
-    public void runUi(StudentRepository studentRepository,
-                      Connection connection) throws SQLException {
+    public void runUi() throws SQLException {
         List<Student> students;
         int menuOption;
         while ((menuOption = getMenuOption()) != 0) {
@@ -66,23 +65,16 @@ public class Ui {
                     if (form.getType().equalsIgnoreCase("aspirant")) {
                         studentAspirantRepository.addStudent(form);
                     } else if (form.getType().equalsIgnoreCase("bachelor")) {
-                        studentRepository = studentBachelorRepository;
                         studentBachelorRepository.addStudent(form);
                     } else {
                         throw new RuntimeException();
                     }
                 }
                 case SHOW_ALL_ASPIRANT_STUDENTS -> {
-                    students = studentAspirantRepository.getAllStudents();
-                    for (Student student : students) {
-                        student.show();
-                    }
+                    studentAspirantRepository.getAllStudents().forEach(Student::show);
                 }
                 case SHOW_ALL_BACHELOR_STUDENTS -> {
-                    students = studentBachelorRepository.getAllStudents();
-                    for (Student student : students) {
-                        student.show();
-                    }
+                    studentBachelorRepository.getAllStudents().forEach(Student::show);
                 }
                 case SHOW_ASPIRANT_BY_FORM -> {
                     students = studentAspirantRepository.getStudentsByForm(findStudentsData());

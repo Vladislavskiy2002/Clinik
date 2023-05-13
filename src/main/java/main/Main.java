@@ -33,7 +33,7 @@ public class Main {
 
             studentRepository = new StudentAspirantRepository(connection);
             Ui ui = new Ui(connection);
-            ui.runUi(studentRepository, connection);
+            ui.runUi();
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
