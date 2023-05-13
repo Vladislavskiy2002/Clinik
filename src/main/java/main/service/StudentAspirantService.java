@@ -22,9 +22,6 @@ public class StudentAspirantService {
         preparedStatement.setInt(1, studentId);
         ResultSet resultSet = preparedStatement.executeQuery();
         int diploma_id = 0;
-        if (resultSet.next()) {
-            diploma_id = resultSet.getInt("diploma_id");
-        }
-        return diploma_id;
+        return resultSet.next() ? resultSet.getInt("diploma_id") : diploma_id;
     }
 }

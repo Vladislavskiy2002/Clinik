@@ -21,9 +21,6 @@ public class StudentBachelorService {
         preparedStatement.setInt(1, studentId);
         ResultSet resultSet = preparedStatement.executeQuery();
         String studentIdentifyCard = "";
-        if (resultSet.next()) {
-            studentIdentifyCard = resultSet.getString("student_identify_card");
-        }
-        return studentIdentifyCard;
+        return resultSet.next() ? resultSet.getString("student_identify_card") : studentIdentifyCard;
     }
 }
