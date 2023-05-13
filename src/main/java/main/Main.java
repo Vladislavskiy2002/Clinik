@@ -23,7 +23,9 @@ public class Main {
         Main main = new Main();
         main.run();
     }
-
+    /**
+     * Метод run - метод який підключає базу даних, та запускає логіку програми
+     */
     private void run() {
 
         try (BufferedReader reader = Files.newBufferedReader(Path.of("StudentDatabaseManagementSystem.properties"))) {

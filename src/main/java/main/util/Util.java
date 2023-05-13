@@ -8,6 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Util {
+    /**
+     * Метод addStudentWithTypeToDb - метод який додає студента до таблиці student_aspirant чи student_bachelor залежно від його типу
+     * У цьому методі в аргументах ми приймаємо Query, Form та Connection
+     * Створюємо Query у якій ми знаходимо усі id студентів за їх email
+     * після чого залежно від Type у Form ми додаємо данні з Form у відповідні таблиці
+     */
     public static void addStudentWithTypeToDb(String query, Form form, Connection connection) throws SQLException {
         String selectQuery = "SELECT id from student where email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);

@@ -14,7 +14,9 @@ public class StudentAspirant extends Student {
         super(id, type, name, surname, email, course);
         this.diplomaID = diplomaID;
     }
-
+    /**
+     * Метод show - перевизначений метод абстрактного класу Student який виводить данні студента який є аспірантом
+     * */
     @Override
     public void show() {
         System.out.println("----------------------------");

@@ -7,6 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateStudent {
+    /**
+     * Метод validateType - метод який запрошує користувача ввести тип студента та після чого робить перевірку на коректність вводу
+     */
     public static Form validateType(Scanner scanner) {
         while (true) {
             String type = "";
@@ -26,7 +29,9 @@ public class ValidateStudent {
             return new Form(type, diplomaId, studentIdentifyCard);
         }
     }
-
+    /**
+     * Метод validateName - метод який запрошує користувача ввести ім'я студента та після чого робить перевірку на коректність вводу
+     */
     public static String validateName(Scanner scanner) {
         String name;
         Matcher matcher;
@@ -43,7 +48,9 @@ public class ValidateStudent {
         } while (!matcher.matches());
         return name;
     }
-
+    /**
+     * Метод validateSurname - метод який запрошує користувача ввести фамілію студента та після чого робить перевірку на коректність вводу
+     */
     public static String validateSurname(Scanner scanner) {
         String name;
         Matcher matcher;
@@ -60,7 +67,9 @@ public class ValidateStudent {
         } while (!matcher.matches());
         return name;
     }
-
+    /**
+     * Метод validateSurname - метод який запрошує користувача ввести курс студента та після чого робить перевірку на коректність вводу
+     */
     public static Integer validateCourse(Scanner scanner) {
         String course;
         Matcher matcher;
@@ -77,24 +86,28 @@ public class ValidateStudent {
         } while (!matcher.matches());
         return Integer.parseInt(course);
     }
-
+    /**
+     * Метод validateRes - метод який запрошує користувача ввести число для вибору категорії у меню та після чого робить перевірку на коректність вводу
+     */
     public static Integer validateRes(Scanner scanner) {
         String num;
         Matcher matcher;
         do {
-            System.out.print("Choose category(1-5): ");
+            System.out.print("Choose category(0-5): ");
             num = scanner.nextLine();
-            String regex = "^[1-5]$";
+            String regex = "^[0-5]$";
             Pattern pattern = Pattern.compile(regex);
             matcher = pattern.matcher(num);
             if (!matcher.matches()) {
                 System.out.println("num isn't correct");
-                System.out.println("num must be int and be (1-5)");
+                System.out.println("num must be int and be (0-5)");
             }
         } while (!matcher.matches());
         return Integer.parseInt(num);
     }
-
+    /**
+     * Метод validateRes - метод який запрошує користувача ввести номер димлому та після чого робить перевірку на коректність вводу
+     */
     public static Integer validateDiplomaId(Scanner scanner) {
         String DiplomaId;
         Matcher matcher;
@@ -111,7 +124,9 @@ public class ValidateStudent {
         } while (!matcher.matches());
         return Integer.parseInt(DiplomaId);
     }
-
+    /**
+     * Метод validateRes - метод який запрошує користувача ввести студентський квиток та після чого робить перевірку на коректність вводу
+     */
     public static String validateStudentIdentifyCard(Scanner scanner) {
         String studentIdentifyCard;
         Matcher matcher;
@@ -128,7 +143,9 @@ public class ValidateStudent {
         } while (!matcher.matches());
         return studentIdentifyCard;
     }
-
+    /**
+     * Метод validateRes - метод який запрошує користувача ввести email та після чого робить перевірку на коректність вводу
+     */
     public static String validateEmail(Scanner scanner) {
         String email;
         Matcher matcher;

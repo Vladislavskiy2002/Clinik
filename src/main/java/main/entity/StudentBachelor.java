@@ -10,7 +10,9 @@ public class StudentBachelor extends Student {
         super(id, type, name, surname, email, course);
         this.studentIdentifyCard = studentIdentifyCard;
     }
-
+    /**
+     * Метод show - перевизначений метод абстрактного класу Student який виводить данні студента який є бакалавром
+     */
     @Override
     public void show() {
         System.out.println("----------------------------");

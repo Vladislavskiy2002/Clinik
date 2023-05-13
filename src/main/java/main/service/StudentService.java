@@ -21,6 +21,11 @@ public class StudentService {
         this.aspirantService = new StudentAspirantService();
     }
 
+    /**
+     * Метод addAspirantAndBachelorStudentsToListFromResultSet - метод який витягує данні з resultSet
+     * Після чого в залежності від типу студента витягує данні з таблиці про його студентський квиток(Бакалавр) чи номер диплому(Аспірант)
+     * Та додає студентів до List
+     */
     public void addAspirantAndBachelorStudentsToListFromResultSet(ResultSet resultSet, Connection connection, List<Student> students) throws SQLException {
         while (true) {
             try {
@@ -44,7 +49,9 @@ public class StudentService {
             }
         }
     }
-
+    /**
+     * Метод addStudentsToDb - метод який додає данні студентів з форми до таблиці student в базі даних
+     */
     public Boolean addStudentsToDb(Form form, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into student (type, name, surname, email, course) VALUES (?, ?, ?, ?, ?)")) {
