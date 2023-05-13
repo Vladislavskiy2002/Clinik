@@ -21,16 +21,19 @@ public class Form {
         this.diplomaID = diplomaID;
         this.studentIdentifyCard = studentIdentifyCard;
     }
-    public Form(String type,Integer diplomaID, String studentIdentifyCard) {
+
+    public Form(String type, Integer diplomaID, String studentIdentifyCard) {
         this.type = type;
         this.diplomaID = diplomaID;
         this.studentIdentifyCard = studentIdentifyCard;
     }
+
     public Form(String name, String surname, Integer course) {
         this.name = name;
         this.surname = surname;
         this.course = course;
     }
+
     public Form(String email) {
         this.email = email;
     }

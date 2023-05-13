@@ -6,9 +6,6 @@ import lombok.Data;
 public class StudentBachelor extends Student {
     private String studentIdentifyCard;
 
-    public StudentBachelor() {
-    }
-
     public StudentBachelor(Integer id, String type, String name, String surname, String email, Integer course, String studentIdentifyCard) {
         super(id, type, name, surname, email, course);
         this.studentIdentifyCard = studentIdentifyCard;

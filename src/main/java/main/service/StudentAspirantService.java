@@ -12,13 +12,14 @@ public class StudentAspirantService {
 
     public boolean addStudentAspirantToDb(Form form, Connection connection) throws SQLException {
         StudentService studentService = new StudentService();
-        studentService.addStudentsToDb(form,connection);
-        Util.addStudentWithTypeToDb("insert into student_aspirant(student_id, diploma_id) VALUES (?,?)",form,connection);
+        studentService.addStudentsToDb(form, connection);
+        Util.addStudentWithTypeToDb("insert into student_aspirant(student_id, diploma_id) VALUES (?,?)", form, connection);
         return true;
     }
-    public Integer findDiplomaIdFromDb(Integer id, Connection connection) throws SQLException {
+
+    public Integer findDiplomaIdFromDb(Integer studentId, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("select diploma_id from student_aspirant where student_id = ?");
-        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(1, studentId);
         ResultSet resultSet = preparedStatement.executeQuery();
         int diploma_id = 0;
         if (resultSet.next()) {

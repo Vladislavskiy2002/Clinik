@@ -7,9 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateStudent {
-    public static Form validateType(Scanner scanner){
-        while(true) {
-            String type ="";
+    public static Form validateType(Scanner scanner) {
+        while (true) {
+            String type = "";
             String studentIdentifyCard = "";
             Integer diplomaId = 0;
             System.out.print("Enter type: ");
@@ -20,91 +20,116 @@ public class ValidateStudent {
             } else if (type.equalsIgnoreCase("bachelor")) {
                 studentIdentifyCard = validateStudentIdentifyCard(scanner);
             } else {
-                System.out.println("можна вибрати лише aspirant чи bachelor");
-               continue;
+                System.out.println("You must choose only aspirant or bachelor");
+                continue;
             }
-            return new Form(type,diplomaId,studentIdentifyCard);
+            return new Form(type, diplomaId, studentIdentifyCard);
         }
     }
-    public static String validateName(Scanner scanner){
-        while(true) {
+
+    public static String validateName(Scanner scanner) {
+        String name;
+        Matcher matcher;
+        do {
             System.out.print("Enter name: ");
-            String name = scanner.nextLine();
-            if (name.isEmpty()) {
-                System.out.println("the name must not be empty");
+            name = scanner.nextLine();
+            String regex = "^(?!.*\\d)^[a-zA-Z]{1,20}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(name);
+            if (!matcher.matches()) {
+                System.out.println("name isn't correct");
+                System.out.println("name must have only alphabet symbols and size min 1 and max 20");
             }
-            else
-                return name;
-        }
+        } while (!matcher.matches());
+        return name;
     }
-    public static String validateSurname(Scanner scanner){
-        while(true) {
+
+    public static String validateSurname(Scanner scanner) {
+        String name;
+        Matcher matcher;
+        do {
             System.out.print("Enter surname: ");
-            String surname = scanner.nextLine();
-            if (surname.isEmpty()) {
-                System.out.println("the surname must not be empty");
+            name = scanner.nextLine();
+            String regex = "^(?!.*\\d)^[a-zA-Z]{1,20}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(name);
+            if (!matcher.matches()) {
+                System.out.println("Surname isn't correct");
+                System.out.println("Surname must have only alphabet symbols and size min 1 and max 20");
             }
-            else
-                return surname;
-        }
+        } while (!matcher.matches());
+        return name;
     }
-    public static Integer validateCourse(Scanner scanner){
-        while(true) {
+
+    public static Integer validateCourse(Scanner scanner) {
+        String course;
+        Matcher matcher;
+        do {
             System.out.print("Enter course: ");
-            Integer course = scanner.nextInt();
-            scanner.nextLine();
-            if (course <= 0) {
-                System.out.println("the course must be greatest than 0");
+            course = scanner.nextLine();
+            String regex = "^(?:[1-9]|1\\d|20)$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(course);
+            if (!matcher.matches()) {
+                System.out.println("Course isn't correct");
+                System.out.println("Course must have only nums and size min 1 and max 20");
             }
-            else if (course >= 20) {
-                System.out.println("the course must be less or equal 20");
-            }
-            else
-                return course;
-        }
+        } while (!matcher.matches());
+        return Integer.parseInt(course);
     }
-    public static Integer validateRes(Scanner scanner){
-        while(true) {
-            System.out.print("Enter course: ");
-            Integer res = scanner.nextInt();
-            scanner.nextLine();
-            if (res < 0 || res > 3) {
-                System.out.println("num must be 0 - 3");
+
+    public static Integer validateRes(Scanner scanner) {
+        String num;
+        Matcher matcher;
+        do {
+            System.out.print("Choose category(1-5): ");
+            num = scanner.nextLine();
+            String regex = "^[1-5]$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(num);
+            if (!matcher.matches()) {
+                System.out.println("num isn't correct");
+                System.out.println("num must be int and be (1-5)");
             }
-            else
-                return res;
-        }
+        } while (!matcher.matches());
+        return Integer.parseInt(num);
     }
-    public static Integer validateDiplomaId(Scanner scanner){
-        while (true) {
-            System.out.print("Enter diplomaId:");
-            Integer diplomaId = scanner.nextInt();
-            scanner.nextLine();
-            if(diplomaId < 0)
-            {
-                System.out.println("diplomaId must be more than 0");
+
+    public static Integer validateDiplomaId(Scanner scanner) {
+        String DiplomaId;
+        Matcher matcher;
+        do {
+            System.out.print("Enter diplomaId: ");
+            DiplomaId = scanner.nextLine();
+            String regex = "^(?:[1-9]\\d{0,5}|999999)$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(DiplomaId);
+            if (!matcher.matches()) {
+                System.out.println("diplomaId isn't correct");
+                System.out.println("diplomaId must be number and have (1-99999)");
             }
-            else if(diplomaId > 999999)
-            {
-                System.out.println("diplomaId must be less than 1000000");
-            }
-            else
-                return diplomaId;
-        }
+        } while (!matcher.matches());
+        return Integer.parseInt(DiplomaId);
     }
-    public static String validateStudentIdentifyCard(Scanner scanner){
-        while (true) {
-            System.out.print("Enter StudentIdentifyCard:");
-            String studentIdentifyCard = scanner.nextLine();
-            if(studentIdentifyCard.isEmpty())
-            {
-                System.out.println("must not be empty'");
+
+    public static String validateStudentIdentifyCard(Scanner scanner) {
+        String studentIdentifyCard;
+        Matcher matcher;
+        do {
+            System.out.print("Enter studentIdentifyCard: ");
+            studentIdentifyCard = scanner.nextLine();
+            String regex = "^[a-zA-Z0-9]{1,15}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(studentIdentifyCard);
+            if (!matcher.matches()) {
+                System.out.println("studentIdentifyCard isn't correct");
+                System.out.println("studentIdentifyCard must have alphabet symbols and nums and be not more than 15 symbols");
             }
-            else
-                return studentIdentifyCard;
-        }
+        } while (!matcher.matches());
+        return studentIdentifyCard;
     }
-    public static String validateEmail(Scanner scanner){
+
+    public static String validateEmail(Scanner scanner) {
         String email;
         Matcher matcher;
         do {

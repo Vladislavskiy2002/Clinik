@@ -3,24 +3,42 @@ package main.repository;
 import main.entity.Form;
 import main.entity.Student;
 import main.service.StudentBachelorService;
-import main.service.StudentService;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentBachelorRepository extends StudentRepository{
-    private StudentBachelorService service;
+public class StudentBachelorRepository extends StudentRepository {
+    private final StudentBachelorService service;
 
     public StudentBachelorRepository(Connection connection) {
         super(connection);
         this.service = new StudentBachelorService();
     }
 
+    public List<Student> getAllStudents() throws SQLException {
+        Statement statement = getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from student join student_bachelor sb on student.id = sb.student_id"); // select * from student join student_aspirant sa on student.id = sa.student_id
+        List<Student> students = new ArrayList<>();
+        getService().addAspirantAndBachelorStudentsToListFromResultSet(resultSet, getConnection(), students);
+        return students;
+    }
+
     public boolean addStudent(Form form) throws SQLException {
-        return service.addStudentBachelorToDb(form,getConnection());
+        return service.addStudentBachelorToDb(form, getConnection());
+    }
+
+    public List<Student> getStudentsByForm(Form form) throws SQLException {
+        String selectQuery = "SELECT * from student join student_bachelor sb on student.id = sb.student_id where name = ? AND surname = ? AND course = ?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(selectQuery);
+        preparedStatement.setString(1, form.getName());
+        preparedStatement.setString(2, form.getSurname());
+        preparedStatement.setInt(3, form.getCourse());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Student> students = new ArrayList<>();
+        getService().addAspirantAndBachelorStudentsToListFromResultSet(resultSet, getConnection(), students);
+        return students;
     }
 }

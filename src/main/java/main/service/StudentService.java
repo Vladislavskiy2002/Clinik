@@ -13,8 +13,8 @@ import java.util.List;
 
 public class StudentService {
 
-    private StudentBachelorService bachelorService;
-    private StudentAspirantService aspirantService;
+    private final StudentBachelorService bachelorService;
+    private final StudentAspirantService aspirantService;
 
     public StudentService() {
         this.bachelorService = new StudentBachelorService();
@@ -36,10 +36,10 @@ public class StudentService {
             Integer course = resultSet.getInt("course");
 
             if (type.equalsIgnoreCase("aspirant")) {
-                Integer diploma_id = aspirantService.findDiplomaIdFromDb(id,connection);
+                Integer diploma_id = aspirantService.findDiplomaIdFromDb(id, connection);
                 students.add(new StudentAspirant(id, type, name, surname, email, course, diploma_id));
             } else if (type.equalsIgnoreCase("bachelor")) {
-                String studentIdentifyCard = bachelorService.findStudentIdentifyCardFromDb(id,connection);
+                String studentIdentifyCard = bachelorService.findStudentIdentifyCardFromDb(id, connection);
                 students.add(new StudentBachelor(id, type, name, surname, email, course, studentIdentifyCard));
             }
         }
