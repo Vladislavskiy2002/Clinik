@@ -67,8 +67,12 @@ public class Ui {
         Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, dogRepository.getConnection());
         String name = ValidateAnimals.validateName(scanner);
         Integer age = ValidateAnimals.validateAge(scanner);
-        String type = "OVCHARKA";
+        String type = ValidateDogs.validateType(scanner);
         return new Dog(name, medicalCardId, age, type);
+    }
+    public Person inputAnimalMedicalIdCardEmailData() {
+        String email = ValidateOwners.validateEmail(scanner);
+        return new Person(email);
     }
 
     public Cat inputCatData() throws SQLException {
@@ -79,10 +83,8 @@ public class Ui {
         return new Cat(name, age, medicalCardId, flyingDream);
     }
 
-    public String inputIllData() throws SQLException {
-        System.out.println("Enter the Ill");
-        String ill = scanner.nextLine();
-        return ill;
+    public String inputIllData(){
+        return ValidateAnimals.validateIll(scanner);
     }
     public void runUi() throws SQLException {
         int menuOption;

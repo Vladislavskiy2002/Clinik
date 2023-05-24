@@ -25,11 +25,27 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return name;
     }
+    public static String validateIll(Scanner scanner) {
+        String ill;
+        Matcher matcher;
+        do {
+            System.out.print("Enter ill: ");
+            ill = scanner.nextLine();
+            String regex = "^.{1,100}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(ill);
+            if (!matcher.matches()) {
+                System.out.println("ill isn't correct");
+                System.out.println("ill must have size min 1 and max 100 symbols");
+            }
+        } while (!matcher.matches());
+        return ill;
+    }
     public static Integer validateRes(Scanner scanner) {
         String num;
         Matcher matcher;
         do {
-            System.out.print("Choose category(0-5): ");
+            System.out.print("Choose category(0-7): ");
             num = scanner.nextLine();
             String regex = "^[0-667]$";
             Pattern pattern = Pattern.compile(regex);
@@ -93,22 +109,25 @@ public class ValidateAnimals {
         return false;
     }
     public static Integer validateMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
-        String medicalCardId;
+        String medicalCardId = "";
         Matcher matcher;
-        do {
-            System.out.print("Enter medicalCardId: ");
-            medicalCardId = scanner.nextLine();
-            String regex = "^[1-9]{1,8}$";
-            Pattern pattern = Pattern.compile(regex);
-            matcher = pattern.matcher(medicalCardId);
-            if (!matcher.matches()) {
-                System.out.println("medicalCardId isn't correct");
-                System.out.println("medicalCardId must have only nums and size min 1 and max 99999999");
-            }
-            else{
-                break;
-            }
-        }while (!matcher.matches() && validateIfCurrentAnimalExist(Integer.parseInt(medicalCardId), connection));
+        Boolean isExist = true;
+        while(isExist) {
+            do {
+                System.out.print("Enter medicalCardId: ");
+                medicalCardId = scanner.nextLine();
+                String regex = "^[1-9]{1,8}$";
+                Pattern pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(medicalCardId);
+                if (!matcher.matches()) {
+                    System.out.println("medicalCardId isn't correct");
+                    System.out.println("medicalCardId must have only nums and size min 1 and max 99999999");
+                }
+                isExist = validateIfCurrentAnimalExist(Integer.parseInt(medicalCardId), connection);
+                if(isExist)
+                    break;
+            } while (!matcher.matches());
+        }
         return Integer.parseInt(medicalCardId);
     }
 }

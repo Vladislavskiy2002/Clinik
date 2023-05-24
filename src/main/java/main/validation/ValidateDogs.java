@@ -29,4 +29,20 @@ public class ValidateDogs {
         }
         return false;
     }
+    public static String validateType(Scanner scanner) {
+        String type;
+        Matcher matcher;
+        do {
+            System.out.print("Enter type: ");
+            type = scanner.nextLine();
+            String regex = "^[a-zA-Z]{1,20}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(type);
+            if (!matcher.matches()) {
+                System.out.println("type isn't correct");
+                System.out.println("type must have size min 1 and max 20");
+            }
+        } while (!matcher.matches());
+        return type;
+    }
 }
