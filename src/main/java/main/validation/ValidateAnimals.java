@@ -57,20 +57,13 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(num);
     }
-    public static Boolean validateIfCurrentCatExist(String name, Integer age,Boolean flyingDream, Connection connection) throws SQLException {
-        String selectQuery = "SELECT animal.id from animal join cats c on animal.id = c.animal_id where name = ? and age = ? and flying_dream = ?";
+    public static Boolean validateIfCurrentCatExist(Integer medicalIdCard, Connection connection) throws SQLException {
+        String selectQuery = "SELECT * from animal join cats c on animal.id = c.animal_id where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setString(1, name);
-        preparedStatement.setInt(2, age);
-        preparedStatement.setBoolean(3, flyingDream);
+        preparedStatement.setInt(1, medicalIdCard);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            if (resultSet.getInt("id") == 0 ) {
-                System.out.println("Cat with current data isn't exist");
-                return false;
-            } else {
                 return true;
-            }
         }
         else {
             System.out.println("Cat with current data isn't exist");
@@ -111,23 +104,28 @@ public class ValidateAnimals {
     public static Integer validateMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
         String medicalCardId = "";
         Matcher matcher;
-        Boolean isExist = true;
-        while(isExist) {
-            do {
-                System.out.print("Enter medicalCardId: ");
-                medicalCardId = scanner.nextLine();
-                String regex = "^[1-9]{1,8}$";
-                Pattern pattern = Pattern.compile(regex);
-                matcher = pattern.matcher(medicalCardId);
-                if (!matcher.matches()) {
-                    System.out.println("medicalCardId isn't correct");
-                    System.out.println("medicalCardId must have only nums and size min 1 and max 99999999");
-                }
-                isExist = validateIfCurrentAnimalExist(Integer.parseInt(medicalCardId), connection);
-                if(isExist)
-                    break;
-            } while (!matcher.matches());
-        }
+        do {
+            System.out.print("Enter medicalCardId: ");
+            medicalCardId = scanner.nextLine();
+            String regex = "^[1-9]{1,8}$";
+            Pattern pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(medicalCardId);
+            if (!matcher.matches()) {
+                System.out.println("medicalCardId isn't correct");
+                System.out.println("medicalCardId must have only nums and size min 1 and max 99999999");
+            }
+        } while (!matcher.matches());
         return Integer.parseInt(medicalCardId);
     }
-}
+    public static Integer validateOnExistMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
+        Boolean isExist = true;
+        Integer medicalCardId = 0;
+        while(isExist) {
+            medicalCardId = validateMedicalCardId(scanner, connection);
+            isExist = validateIfCurrentAnimalExist(medicalCardId, connection);
+                if(isExist)
+                    break;
+            }
+        return medicalCardId;
+        }
+    }

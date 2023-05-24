@@ -12,4 +12,8 @@ public class Dog extends Animal {
         super(name, medicalCardId, age);
         this.type = type;
     }
+
+    public Dog() {
+        super();
+    }
 }

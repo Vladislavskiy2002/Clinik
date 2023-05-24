@@ -26,7 +26,7 @@ public class DogService extends AnimalService{
     }
 
     public void dischargeDog(Dog dog, Connection connection) throws SQLException {
-        if(ValidateDogs.validateIfCurrentDogExist(dog.getName(),dog.getAge(),dog.getType(),connection)) {
+        if(ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(),connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dogs WHERE animal_id = ?");
             preparedStatement.setInt(1, dog.getAnimalId());
             preparedStatement.executeUpdate();

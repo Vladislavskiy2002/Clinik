@@ -14,4 +14,8 @@ public abstract class Animal {
         this.age = age;
         this.medicalCardId = medicalCardId;
     }
+
+    public Animal() {
+
+    }
 }

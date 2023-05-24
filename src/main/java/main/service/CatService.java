@@ -25,7 +25,7 @@ public class CatService extends AnimalService{
     }
 
     public void dischargeCat(Cat cat, Connection connection) throws SQLException {
-        if(ValidateAnimals.validateIfCurrentCatExist(cat.getName(),cat.getAge(),cat.getFlyingDream(),connection)){
+        if(ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(),connection)){
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cats WHERE animal_id = ?");
         preparedStatement.setInt(1, cat.getAnimalId());
         preparedStatement.executeUpdate();
@@ -33,6 +33,8 @@ public class CatService extends AnimalService{
         preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
         preparedStatement.setInt(1, cat.getAnimalId());
         preparedStatement.executeUpdate();
+
+            System.out.println("THE CAT HAS BEEN DISCHARGED");
         }
     }
 

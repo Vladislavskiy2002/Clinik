@@ -17,4 +17,8 @@ public class Cat extends Animal {
         super(name, age, medicalCardId);
         this.flyingDream = flyingDream;
     }
+
+    public Cat() {
+
+    }
 }

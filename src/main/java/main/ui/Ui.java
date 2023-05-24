@@ -58,8 +58,11 @@ public class Ui {
         return new Person(name, surname, email);
     }
 
-    public Person inputPersonEmailData() {
-        String email = ValidateOwners.validateEmail(scanner);
+    public Person inputPersonEmailData() throws SQLException {
+        String email;
+        do {
+            email = ValidateOwners.validateEmail(scanner);
+        } while (ValidateOwners.validateIfCurrentOwnerIsNotExist(email, dogRepository.getConnection()));
         return new Person(email);
     }
 
@@ -70,10 +73,6 @@ public class Ui {
         String type = ValidateDogs.validateType(scanner);
         return new Dog(name, medicalCardId, age, type);
     }
-    public Person inputAnimalMedicalIdCardEmailData() {
-        String email = ValidateOwners.validateEmail(scanner);
-        return new Person(email);
-    }
 
     public Cat inputCatData() throws SQLException {
         Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, catRepository.getConnection());
@@ -82,7 +81,24 @@ public class Ui {
         Boolean flyingDream = ValidateCats.validateFlyingDream(scanner);
         return new Cat(name, age, medicalCardId, flyingDream);
     }
+    public Dog inputAddDogData() throws SQLException {
+        Integer medicalCardId = ValidateAnimals.validateOnExistMedicalCardId(scanner, dogRepository.getConnection());
+        String name = ValidateAnimals.validateName(scanner);
+        Integer age = ValidateAnimals.validateAge(scanner);
+        String type = ValidateDogs.validateType(scanner);
+        return new Dog(name, medicalCardId, age, type);
+    }
 
+    public Cat inputAddCatData() throws SQLException {
+        Integer medicalCardId = ValidateAnimals.validateOnExistMedicalCardId(scanner, catRepository.getConnection());
+        String name = ValidateAnimals.validateName(scanner);
+        Integer age = ValidateAnimals.validateAge(scanner);
+        Boolean flyingDream = ValidateCats.validateFlyingDream(scanner);
+        return new Cat(name, age, medicalCardId, flyingDream);
+    }
+    public Integer inputMedicalCardIdData() throws SQLException {
+        return ValidateAnimals.validateMedicalCardId(scanner, personRepository.getConnection());
+    }
     public String inputIllData(){
         return ValidateAnimals.validateIll(scanner);
     }
@@ -96,7 +112,7 @@ public class Ui {
                 }
                 case ADD_DOG -> {
                     Person person = inputPersonEmailData();
-                    Dog dog = inputDogData();
+                    Dog dog = inputAddDogData();
                     dogRepository.addDog(dog);
                     dog.setId(dogRepository.findDogIdByMedicalIdCard(dog, dogRepository.getConnection()));
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
@@ -104,7 +120,7 @@ public class Ui {
                 }
                 case ADD_CAT -> {
                     Person person = inputPersonEmailData();
-                    Cat cat = inputCatData();
+                    Cat cat = inputAddCatData();
                     catRepository.addCat(cat);
                     cat.setId(catRepository.findCatIdByMedicalIdCard(cat, catRepository.getConnection()));
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
@@ -112,7 +128,8 @@ public class Ui {
                 }
                 case DISCHARGE_DOG -> {
                     Person person = inputPersonEmailData();
-                    Dog dog = inputDogData();
+                    Dog dog = new Dog();
+                    dog.setMedicalCardId(inputMedicalCardIdData());
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
                     dog.setAnimalId(dogRepository.findDogIdByMedicalIdCard(dog, personRepository.getConnection()));
                     clinicRepository.dischargeDog(person, dog, dogRepository.getConnection());
@@ -120,7 +137,8 @@ public class Ui {
                 }
                 case DISCHARGE_CAT -> {
                     Person person = inputPersonEmailData();
-                    Cat cat = inputCatData();
+                    Cat cat = new Cat();
+                    cat.setMedicalCardId(inputMedicalCardIdData());
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
                     cat.setAnimalId(catRepository.findCatIdByMedicalIdCard(cat, personRepository.getConnection()));
                     clinicRepository.dischargeCat(person, cat, catRepository.getConnection());

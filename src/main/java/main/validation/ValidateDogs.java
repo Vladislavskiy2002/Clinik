@@ -9,20 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateDogs {
-    public static Boolean validateIfCurrentDogExist(String name, Integer age, String type, Connection connection) throws SQLException {
-        String selectQuery = "SELECT animal.id from animal join dogs c on animal.id = c.animal_id where name = ? and age = ? and type = ?";
+    public static Boolean validateIfCurrentDogExist(Integer medicalIdCard, Connection connection) throws SQLException {
+        String selectQuery = "SELECT * from animal join dogs c on animal.id = c.animal_id where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setString(1, name);
-        preparedStatement.setInt(2, age);
-        preparedStatement.setString(3, type);
+        preparedStatement.setInt(1, medicalIdCard);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            if (resultSet.getInt("id") == 0 ) {
-                System.out.println("Dog with current data isn't exist");
-                return false;
-            } else {
                 return true;
-            }
         }
         else {
             System.out.println("Dog with current data isn't exist");

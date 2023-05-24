@@ -52,4 +52,15 @@ public class ValidateOwners {
         }
         return false;
     }
+    public static Boolean validateIfCurrentOwnerIsNotExist(final String email, Connection connection) throws SQLException {
+        String selectQuery = "SELECT email from owner where email = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+        preparedStatement.setString(1, email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return false;
+        }
+        System.out.println("Current owner isn't exist");
+        return true;
+    }
 }
