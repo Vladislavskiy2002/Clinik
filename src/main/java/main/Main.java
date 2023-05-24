@@ -1,7 +1,5 @@
 package main;
 
-import main.repository.StudentAspirantRepository;
-import main.repository.StudentRepository;
 import main.ui.Ui;
 
 import java.io.BufferedReader;
@@ -14,26 +12,19 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Main {
-    private StudentRepository studentRepository;
-
     public Main() {
     }
-
     public static void main(String[] args) {
         Main main = new Main();
         main.run();
     }
-    /**
-     * Метод run - метод який підключає базу даних, та запускає логіку програми
-     */
     private void run() {
 
-        try (BufferedReader reader = Files.newBufferedReader(Path.of("StudentDatabaseManagementSystem.properties"))) {
+        try (BufferedReader reader = Files.newBufferedReader(Path.of("Clinik.properties"))) {
             Properties props = new Properties();
             props.load(reader);
             Connection connection = DriverManager.getConnection(props.getProperty("url"), props);
 
-            studentRepository = new StudentAspirantRepository(connection);
             Ui ui = new Ui(connection);
             ui.runUi();
         } catch (SQLException | IOException e) {

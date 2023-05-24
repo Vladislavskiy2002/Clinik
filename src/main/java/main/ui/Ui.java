@@ -1,101 +1,138 @@
 package main.ui;
 
-import main.entity.Form;
-import main.entity.Student;
-import main.repository.StudentAspirantRepository;
-import main.repository.StudentBachelorRepository;
-import main.validation.ValidateStudent;
+import main.entity.Clinic;
+import main.entity.Person;
+import main.entity.animals.Cat;
+import main.entity.animals.Dog;
+import main.repository.CatRepository;
+import main.repository.ClinicRepository;
+import main.repository.DogRepository;
+import main.repository.PersonRepository;
+import main.validation.ValidateAnimals;
+import main.validation.ValidateCats;
+import main.validation.ValidateDogs;
+import main.validation.ValidateOwners;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 import static main.util.MyConstants.*;
 
 public class Ui {
     private final Scanner scanner;
-    private final StudentAspirantRepository studentAspirantRepository;
-    private final StudentBachelorRepository studentBachelorRepository;
+    private final PersonRepository personRepository;
+    private final DogRepository dogRepository;
+    private final CatRepository catRepository;
+    private final ClinicRepository clinicRepository;
 
     public Ui(Connection connection) {
-        studentAspirantRepository = new StudentAspirantRepository(connection);
-        studentBachelorRepository = new StudentBachelorRepository(connection);
+        personRepository = new PersonRepository(connection);
+        dogRepository = new DogRepository(connection);
+        clinicRepository = new ClinicRepository(connection);
+        catRepository = new CatRepository(connection);
         scanner = new Scanner(System.in);
     }
-    /**
-     * Метод getMenuOption - метод який виводить у консоль меню опцій
-     * та чекає на ввід в консоль число яке є від 1-5
-     */
     public int getMenuOption() {
         System.out.println("""
-                1. Add Student
-                2. Show Aspirant student
-                3. Show Bachelor student
-                4. Find Aspirant student
-                5. Find Bachelor student
+                1. Create owner
+                2. Add dog to clinic
+                3. Add cat to clinic
+                4. Discharge the dog from clinic
+                5. Discharge the cat from clinic
+                6. Show Owner's dogs
+                7. Show Owner's cats
                 ---------------
                 0. Exit
                 """);
-        Integer res = ValidateStudent.validateRes(scanner);
+        Integer res = ValidateAnimals.validateRes(scanner);
         return res;
     }
-    /**
-     * Метод inputStudentData - метод який дозволяє користувачу ввести коректні данні про студента при його додаванні
-     */
-    public Form inputStudentData() {
-        Form form = ValidateStudent.validateType(scanner);
-        String name = ValidateStudent.validateName(scanner);
-        String surname = ValidateStudent.validateSurname(scanner);
-        String email = ValidateStudent.validateEmail(scanner);
-        Integer course = ValidateStudent.validateCourse(scanner);
-        return new Form(form.getType(), name, surname, email, course, form.getDiplomaID(), form.getStudentIdentifyCard());
+    public Person inputPersonData() throws SQLException {
+        String name = ValidateAnimals.validateName(scanner);
+        String surname = ValidateOwners.validateSurname(scanner);
+        String email;
+        do {
+            email = ValidateOwners.validateEmail(scanner);
+        } while (ValidateOwners.validateIfCurrentOwnerExist(email, dogRepository.getConnection()));
+        return new Person(name, surname, email);
     }
-    /**
-     * Метод findStudentsData - метод який дозволяє користувачу ввести коректні данні про студента при його пошуку
-     */
-    public Form findStudentsData() {
-        String name = ValidateStudent.validateName(scanner);
-        String surname = ValidateStudent.validateSurname(scanner);
-        Integer course = ValidateStudent.validateCourse(scanner);
-        return new Form(name, surname, course);
+
+    public Person inputPersonEmailData() {
+        String email = ValidateOwners.validateEmail(scanner);
+        return new Person(email);
     }
-    /**
-     * Метод runUi - метод який реалізує запуск логіки програми
-     * у ньому ми для menuOption присвоюємо результат з методу getMenuOption()
-     * ЯКЩО menuOption 0 - то ми реалізуємо вихід з програми через виконану умову while
-     * ЯКЩО menuOption 1 - то виконується умова case ADD_STUDENT у якій ми викликаємо метод inputStudentData() який повертає форму яку заповнює користувач
-     *      після в залежності від type у формі ми викликаємо додавання студента
-     * ЯКЩО menuOption 2 - то ми викликаємо у studentAspirantRepository метод getAllStudents та після чого виводимо усіх студентів аспірантів
-     * ЯКЩО menuOption 3 - то ми викликаємо у studentBachelorRepository метод getAllStudents та після чого виводимо усіх студентів бакалаврів
-     * ЯКЩО menuOption 4 - то ми викликаємо у studentAspirantRepository метод getStudentsByForm та після чого виводимо усіх студентів аспірантів за формою
-     * ЯКЩО menuOption 5 - то ми викликаємо у studentBachelorRepository метод getStudentsByForm та після чого виводимо усіх студентів бакалаврів за формою
-     */
+
+    public Dog inputDogData() throws SQLException {
+        Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, dogRepository.getConnection());
+        String name = ValidateAnimals.validateName(scanner);
+        Integer age = ValidateAnimals.validateAge(scanner);
+        String type = "OVCHARKA";
+        return new Dog(name, medicalCardId, age, type);
+    }
+
+    public Cat inputCatData() throws SQLException {
+        Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, catRepository.getConnection());
+        String name = ValidateAnimals.validateName(scanner);
+        Integer age = ValidateAnimals.validateAge(scanner);
+        Boolean flyingDream = ValidateCats.validateFlyingDream(scanner);
+        return new Cat(name, age, medicalCardId, flyingDream);
+    }
+
+    public String inputIllData() throws SQLException {
+        System.out.println("Enter the Ill");
+        String ill = scanner.nextLine();
+        return ill;
+    }
     public void runUi() throws SQLException {
         int menuOption;
         while ((menuOption = getMenuOption()) != 0) {
             switch (menuOption) {
-                case ADD_STUDENT -> {
-                    Form form = inputStudentData();
-                    if (form.getType().equalsIgnoreCase("aspirant")) {
-                        studentAspirantRepository.addStudent(form);
-                    } else if (form.getType().equalsIgnoreCase("bachelor")) {
-                        studentBachelorRepository.addStudent(form);
-                    } else {
-                        throw new RuntimeException();
-                    }
+                case ADD_PERSON -> {
+                    Person person = inputPersonData();
+                    personRepository.addPerson(person);
                 }
-                case SHOW_ALL_ASPIRANT_STUDENTS -> {
-                    studentAspirantRepository.getAllStudents().forEach(Student::show);
+                case ADD_DOG -> {
+                    Person person = inputPersonEmailData();
+                    Dog dog = inputDogData();
+                    dogRepository.addDog(dog);
+                    dog.setId(dogRepository.findDogIdByMedicalIdCard(dog, dogRepository.getConnection()));
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    clinicRepository.registration(new Clinic(person.getId(), dog.getId(), inputIllData()));
                 }
-                case SHOW_ALL_BACHELOR_STUDENTS -> {
-                    studentBachelorRepository.getAllStudents().forEach(Student::show);
+                case ADD_CAT -> {
+                    Person person = inputPersonEmailData();
+                    Cat cat = inputCatData();
+                    catRepository.addCat(cat);
+                    cat.setId(catRepository.findCatIdByMedicalIdCard(cat, catRepository.getConnection()));
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    clinicRepository.registration(new Clinic(person.getId(), cat.getId(), inputIllData()));
                 }
-                case SHOW_ASPIRANT_BY_FORM -> {
-                    studentAspirantRepository.getStudentsByForm(findStudentsData()).forEach(Student::show);
+                case DISCHARGE_DOG -> {
+                    Person person = inputPersonEmailData();
+                    Dog dog = inputDogData();
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    dog.setAnimalId(dogRepository.findDogIdByMedicalIdCard(dog, personRepository.getConnection()));
+                    clinicRepository.dischargeDog(person, dog, dogRepository.getConnection());
+                    dogRepository.dischargeDog(dog, dogRepository.getConnection());
                 }
-                case SHOW_BACHELOR_BY_FORM -> {
-                    studentBachelorRepository.getStudentsByForm(findStudentsData()).forEach(Student::show);
+                case DISCHARGE_CAT -> {
+                    Person person = inputPersonEmailData();
+                    Cat cat = inputCatData();
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    cat.setAnimalId(catRepository.findCatIdByMedicalIdCard(cat, personRepository.getConnection()));
+                    clinicRepository.dischargeCat(person, cat, catRepository.getConnection());
+                    catRepository.dischargeCat(cat, catRepository.getConnection());
+                }
+                case SHOW_DOGS -> {
+                    Person person = inputPersonEmailData();
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    dogRepository.showDogs(person, dogRepository.getConnection());
+                }
+                case SHOW_CATS -> {
+                    Person person = inputPersonEmailData();
+                    person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
+                    catRepository.showCats(person, catRepository.getConnection());
                 }
             }
         }
