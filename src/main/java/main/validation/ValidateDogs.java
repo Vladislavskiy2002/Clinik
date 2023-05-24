@@ -15,13 +15,13 @@ public class ValidateDogs {
         preparedStatement.setInt(1, medicalIdCard);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-                return true;
-        }
-        else {
+            return true;
+        } else {
             System.out.println("Dog with current data isn't exist");
         }
         return false;
     }
+
     public static String validateType(Scanner scanner) {
         String type;
         Matcher matcher;

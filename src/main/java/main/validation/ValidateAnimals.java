@@ -25,6 +25,7 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return name;
     }
+
     public static String validateIll(Scanner scanner) {
         String ill;
         Matcher matcher;
@@ -41,6 +42,7 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return ill;
     }
+
     public static Integer validateRes(Scanner scanner) {
         String num;
         Matcher matcher;
@@ -57,19 +59,20 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(num);
     }
+
     public static Boolean validateIfCurrentCatExist(Integer medicalIdCard, Connection connection) throws SQLException {
         String selectQuery = "SELECT * from animal join cats c on animal.id = c.animal_id where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
         preparedStatement.setInt(1, medicalIdCard);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-                return true;
-        }
-        else {
+            return true;
+        } else {
             System.out.println("Cat with current data isn't exist");
         }
         return false;
     }
+
     public static Integer validateAge(Scanner scanner) {
         String age;
         Matcher matcher;
@@ -86,13 +89,14 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(age);
     }
+
     public static Boolean validateIfCurrentAnimalExist(Integer medicalIdCard, Connection connection) throws SQLException {
         String selectQuery = "SELECT animal.id from animal where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
         preparedStatement.setInt(1, medicalIdCard);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            if (resultSet.getInt("id") == 0 ) {
+            if (resultSet.getInt("id") == 0) {
                 return false;
             } else {
                 System.out.println("Pet with current medicalIdCard is already exist");
@@ -101,6 +105,7 @@ public class ValidateAnimals {
         }
         return false;
     }
+
     public static Integer validateMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
         String medicalCardId = "";
         Matcher matcher;
@@ -117,15 +122,16 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(medicalCardId);
     }
+
     public static Integer validateOnExistMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
         Boolean isExist = true;
         Integer medicalCardId = 0;
-        while(isExist) {
+        while (isExist) {
             medicalCardId = validateMedicalCardId(scanner, connection);
             isExist = validateIfCurrentAnimalExist(medicalCardId, connection);
-                if(isExist)
-                    break;
-            }
-        return medicalCardId;
+            if (isExist)
+                break;
         }
+        return medicalCardId;
     }
+}

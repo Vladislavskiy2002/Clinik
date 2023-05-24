@@ -26,7 +26,7 @@ public class ClinicService {
     }
 
     public void dischargeDog(Person person, Dog dog, Connection connection) throws SQLException {
-        if(ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(),connection)) {
+        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM clinic WHERE owner_id = ? and animal_id = ?");
             preparedStatement.setInt(1, person.getId());
             preparedStatement.setInt(2, dog.getAnimalId());
@@ -35,7 +35,7 @@ public class ClinicService {
     }
 
     public void dischargeCat(Person person, Cat cat, Connection connection) throws SQLException {
-        if(ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(),connection)) {
+        if (ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(), connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM clinic WHERE owner_id = ? and animal_id = ?");
             preparedStatement.setInt(1, person.getId());
             preparedStatement.setInt(2, cat.getAnimalId());

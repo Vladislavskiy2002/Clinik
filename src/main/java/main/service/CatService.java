@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CatService extends AnimalService{
+public class CatService extends AnimalService {
     public void addCat(Cat cat, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from animal where medical_id_card = ?");
         preparedStatement.setInt(1, cat.getMedicalCardId());
@@ -25,14 +25,14 @@ public class CatService extends AnimalService{
     }
 
     public void dischargeCat(Cat cat, Connection connection) throws SQLException {
-        if(ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(),connection)){
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cats WHERE animal_id = ?");
-        preparedStatement.setInt(1, cat.getAnimalId());
-        preparedStatement.executeUpdate();
+        if (ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(), connection)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cats WHERE animal_id = ?");
+            preparedStatement.setInt(1, cat.getAnimalId());
+            preparedStatement.executeUpdate();
 
-        preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
-        preparedStatement.setInt(1, cat.getAnimalId());
-        preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
+            preparedStatement.setInt(1, cat.getAnimalId());
+            preparedStatement.executeUpdate();
 
             System.out.println("THE CAT HAS BEEN DISCHARGED");
         }

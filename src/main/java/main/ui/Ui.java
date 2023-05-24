@@ -33,6 +33,7 @@ public class Ui {
         catRepository = new CatRepository(connection);
         scanner = new Scanner(System.in);
     }
+
     public int getMenuOption() {
         System.out.println("""
                 1. Create owner
@@ -48,6 +49,7 @@ public class Ui {
         Integer res = ValidateAnimals.validateRes(scanner);
         return res;
     }
+
     public Person inputPersonData() throws SQLException {
         String name = ValidateAnimals.validateName(scanner);
         String surname = ValidateOwners.validateSurname(scanner);
@@ -66,21 +68,6 @@ public class Ui {
         return new Person(email);
     }
 
-    public Dog inputDogData() throws SQLException {
-        Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, dogRepository.getConnection());
-        String name = ValidateAnimals.validateName(scanner);
-        Integer age = ValidateAnimals.validateAge(scanner);
-        String type = ValidateDogs.validateType(scanner);
-        return new Dog(name, medicalCardId, age, type);
-    }
-
-    public Cat inputCatData() throws SQLException {
-        Integer medicalCardId = ValidateAnimals.validateMedicalCardId(scanner, catRepository.getConnection());
-        String name = ValidateAnimals.validateName(scanner);
-        Integer age = ValidateAnimals.validateAge(scanner);
-        Boolean flyingDream = ValidateCats.validateFlyingDream(scanner);
-        return new Cat(name, age, medicalCardId, flyingDream);
-    }
     public Dog inputAddDogData() throws SQLException {
         Integer medicalCardId = ValidateAnimals.validateOnExistMedicalCardId(scanner, dogRepository.getConnection());
         String name = ValidateAnimals.validateName(scanner);
@@ -96,12 +83,15 @@ public class Ui {
         Boolean flyingDream = ValidateCats.validateFlyingDream(scanner);
         return new Cat(name, age, medicalCardId, flyingDream);
     }
+
     public Integer inputMedicalCardIdData() throws SQLException {
         return ValidateAnimals.validateMedicalCardId(scanner, personRepository.getConnection());
     }
-    public String inputIllData(){
+
+    public String inputIllData() {
         return ValidateAnimals.validateIll(scanner);
     }
+
     public void runUi() throws SQLException {
         int menuOption;
         while ((menuOption = getMenuOption()) != 0) {

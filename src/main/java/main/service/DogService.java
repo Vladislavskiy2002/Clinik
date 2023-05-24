@@ -2,7 +2,6 @@ package main.service;
 
 import main.entity.Person;
 import main.entity.animals.Dog;
-import main.validation.ValidateAnimals;
 import main.validation.ValidateDogs;
 
 import java.sql.Connection;
@@ -10,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DogService extends AnimalService{
+public class DogService extends AnimalService {
     public void addDog(Dog dog, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from animal where medical_id_card = ?");
         preparedStatement.setInt(1, dog.getMedicalCardId());
@@ -26,7 +25,7 @@ public class DogService extends AnimalService{
     }
 
     public void dischargeDog(Dog dog, Connection connection) throws SQLException {
-        if(ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(),connection)) {
+        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dogs WHERE animal_id = ?");
             preparedStatement.setInt(1, dog.getAnimalId());
             preparedStatement.executeUpdate();

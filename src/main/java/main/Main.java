@@ -14,10 +14,12 @@ import java.util.Properties;
 public class Main {
     public Main() {
     }
+
     public static void main(String[] args) {
         Main main = new Main();
         main.run();
     }
+
     private void run() {
 
         try (BufferedReader reader = Files.newBufferedReader(Path.of("Clinik.properties"))) {

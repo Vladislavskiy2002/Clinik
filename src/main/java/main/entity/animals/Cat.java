@@ -13,7 +13,7 @@ public class Cat extends Animal {
         this.flyingDream = flyingDream;
     }
 
-    public Cat(Integer id, String name, Integer age, Integer medicalCardId,Boolean flyingDream) {
+    public Cat(Integer id, String name, Integer age, Integer medicalCardId, Boolean flyingDream) {
         super(name, age, medicalCardId);
         this.flyingDream = flyingDream;
     }

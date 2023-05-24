@@ -25,6 +25,7 @@ public class ValidateOwners {
         } while (!matcher.matches());
         return name;
     }
+
     public static String validateEmail(Scanner scanner) {
         String email;
         Matcher matcher;
@@ -41,6 +42,7 @@ public class ValidateOwners {
         } while (!matcher.matches());
         return email;
     }
+
     public static Boolean validateIfCurrentOwnerExist(final String email, Connection connection) throws SQLException {
         String selectQuery = "SELECT email from owner where email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -52,6 +54,7 @@ public class ValidateOwners {
         }
         return false;
     }
+
     public static Boolean validateIfCurrentOwnerIsNotExist(final String email, Connection connection) throws SQLException {
         String selectQuery = "SELECT email from owner where email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);

@@ -1,7 +1,6 @@
 package main.service;
 
 import main.entity.animals.Animal;
-import main.entity.animals.Cat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
