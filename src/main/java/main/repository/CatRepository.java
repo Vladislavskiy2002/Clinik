@@ -28,8 +28,8 @@ public class CatRepository {
         return service.findAnimalIdByMedicalIdCard(cat, connection);
     }
 
-    public void dischargeCat(Cat cat, Connection connection) throws SQLException {
-        service.dischargeCat(cat, connection);
+    public void dischargeCat(Person person, Cat cat, Connection connection) throws SQLException {
+        service.dischargeCat(person, cat, connection);
     }
 
     public void showCats(Person person, Connection connection) throws SQLException {

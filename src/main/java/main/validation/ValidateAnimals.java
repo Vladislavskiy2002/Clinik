@@ -129,8 +129,6 @@ public class ValidateAnimals {
         while (isExist) {
             medicalCardId = validateMedicalCardId(scanner, connection);
             isExist = validateIfCurrentAnimalExist(medicalCardId, connection);
-            if (isExist)
-                break;
         }
         return medicalCardId;
     }

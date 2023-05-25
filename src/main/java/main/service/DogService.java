@@ -24,8 +24,8 @@ public class DogService extends AnimalService {
         preparedStatement.executeUpdate();
     }
 
-    public void dischargeDog(Dog dog, Connection connection) throws SQLException {
-        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection)) {
+    public void dischargeDog(Person person, Dog dog, Connection connection) throws SQLException {
+        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection) && ValidateDogs.validateIfCurrentDogWithCurrentOwnerExist(person,dog.getMedicalCardId(),connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dogs WHERE animal_id = ?");
             preparedStatement.setInt(1, dog.getAnimalId());
             preparedStatement.executeUpdate();
@@ -48,6 +48,7 @@ public class DogService extends AnimalService {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            Integer medicalIdCard = resultSet.getInt("medical_id_card");
             String date = resultSet.getString("date");
             String name = resultSet.getString("name");
             Integer age = resultSet.getInt("age");
@@ -55,7 +56,8 @@ public class DogService extends AnimalService {
             String ill = resultSet.getString("ill");
 
             System.out.println("--------------------------------------");
-            System.out.println("\tPet's information");
+            System.out.println("\tDog's information");
+            System.out.println("\tMedical Id Card: " + medicalIdCard);
             System.out.println("\tName: " + name);
             System.out.println("\tAge: " + age);
             System.out.println("\tBreed: " + type);

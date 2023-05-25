@@ -28,8 +28,8 @@ public class DogRepository {
         return service.findAnimalIdByMedicalIdCard(dog, connection);
     }
 
-    public void dischargeDog(Dog dog, Connection connection) throws SQLException {
-        service.dischargeDog(dog, connection);
+    public void dischargeDog(Person person, Dog dog, Connection connection) throws SQLException {
+        service.dischargeDog(person, dog, connection);
     }
 
     public void showDogs(Person person, Connection connection) throws SQLException {

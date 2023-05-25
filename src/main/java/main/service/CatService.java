@@ -3,6 +3,8 @@ package main.service;
 import main.entity.Person;
 import main.entity.animals.Cat;
 import main.validation.ValidateAnimals;
+import main.validation.ValidateCats;
+import main.validation.ValidateDogs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,8 +26,8 @@ public class CatService extends AnimalService {
         preparedStatement.executeUpdate();
     }
 
-    public void dischargeCat(Cat cat, Connection connection) throws SQLException {
-        if (ValidateAnimals.validateIfCurrentCatExist(cat.getMedicalCardId(), connection)) {
+    public void dischargeCat(Person person, Cat cat, Connection connection) throws SQLException {
+        if (ValidateDogs.validateIfCurrentDogWithCurrentOwnerExist(person,cat.getMedicalCardId(),connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cats WHERE animal_id = ?");
             preparedStatement.setInt(1, cat.getAnimalId());
             preparedStatement.executeUpdate();
@@ -39,7 +41,7 @@ public class CatService extends AnimalService {
     }
 
     public void showCats(Person person, Connection connection) throws SQLException {
-        String selectQuery = "select * from clinic join cats d on clinic.animal_id = d.animal_id join animal a on clinic.animal_id = a.id where owner_id = ?"; // select * from student join student_aspirant sa on student.id = sa.student_id
+        String selectQuery = "select * from clinic join cats d on clinic.animal_id = d.animal_id join animal a on clinic.animal_id = a.id where owner_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
         preparedStatement.setInt(1, person.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,7 +58,7 @@ public class CatService extends AnimalService {
             String ill = resultSet.getString("ill");
 
             System.out.println("--------------------------------------");
-            System.out.println("\tPet's information");
+            System.out.println("\tCat's information");
             System.out.println("\tName: " + name);
             System.out.println("\tAge: " + age);
             System.out.println("\tFlying dream: " + flyingDream);

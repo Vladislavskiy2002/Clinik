@@ -1,5 +1,7 @@
 package main.validation;
 
+import main.entity.Person;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +23,19 @@ public class ValidateDogs {
         }
         return false;
     }
-
+    public static Boolean validateIfCurrentDogWithCurrentOwnerExist(Person person, Integer medicalIdCard, Connection connection) throws SQLException {
+        String selectQuery = "SELECT * from animal join dogs c on animal.id = c.animal_id join clinic c2 on c.animal_id = c2.animal_id where medical_id_card = ? and owner_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+        preparedStatement.setInt(1, medicalIdCard);
+        preparedStatement.setInt(2, person.getId());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return true;
+        } else {
+            System.out.println("Dog with current owner isn't exist");
+        }
+        return false;
+    }
     public static String validateType(Scanner scanner) {
         String type;
         Matcher matcher;

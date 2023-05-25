@@ -26,11 +26,21 @@ public class ClinicService {
     }
 
     public void dischargeDog(Person person, Dog dog, Connection connection) throws SQLException {
-        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection)) {
+        if (ValidateDogs.validateIfCurrentDogWithCurrentOwnerExist(person,dog.getMedicalCardId(),connection)) {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM clinic WHERE owner_id = ? and animal_id = ?");
             preparedStatement.setInt(1, person.getId());
             preparedStatement.setInt(2, dog.getAnimalId());
             preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM dogs WHERE animal_id = ?");
+            preparedStatement.setInt(1, dog.getAnimalId());
+            preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
+            preparedStatement.setInt(1, dog.getAnimalId());
+            preparedStatement.executeUpdate();
+
+            System.out.println("THE DOG HAS BEEN DISCHARGED");
         }
     }
 

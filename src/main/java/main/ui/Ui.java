@@ -123,7 +123,6 @@ public class Ui {
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
                     dog.setAnimalId(dogRepository.findDogIdByMedicalIdCard(dog, personRepository.getConnection()));
                     clinicRepository.dischargeDog(person, dog, dogRepository.getConnection());
-                    dogRepository.dischargeDog(dog, dogRepository.getConnection());
                 }
                 case DISCHARGE_CAT -> {
                     Person person = inputPersonEmailData();
@@ -132,7 +131,6 @@ public class Ui {
                     person.setId(personRepository.findPersonIdByEmail(person, personRepository.getConnection()));
                     cat.setAnimalId(catRepository.findCatIdByMedicalIdCard(cat, personRepository.getConnection()));
                     clinicRepository.dischargeCat(person, cat, catRepository.getConnection());
-                    catRepository.dischargeCat(cat, catRepository.getConnection());
                 }
                 case SHOW_DOGS -> {
                     Person person = inputPersonEmailData();
