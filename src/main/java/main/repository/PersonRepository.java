@@ -16,11 +16,15 @@ public class PersonRepository {
         this.connection = connection;
         this.service = new PersonService();
     }
-
+    /**
+     * Метод addPerson - метод класу PersonRepository який викликає service.addPerson
+     */
     public void addPerson(Person person) throws SQLException {
         service.addPerson(connection, person);
     }
-
+    /**
+     * Метод findPersonIdByEmail - метод класу PersonRepository який викликає service.findPersonIdByEmail
+     */
     public int findPersonIdByEmail(Person person, Connection connection) throws SQLException {
         return service.findPersonIdByEmail(person, connection);
     }

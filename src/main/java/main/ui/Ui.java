@@ -19,6 +19,18 @@ import java.util.Scanner;
 
 import static main.util.MyConstants.*;
 
+/**
+ * Метод runUi - метод який реалізує запуск логіки програми
+ * у ньому ми для menuOption присвоюємо результат з методу getMenuOption()
+ * ЯКЩО menuOption 0 - то ми реалізуємо вихід з програми через виконану умову while
+ * ЯКЩО menuOption 1 - то виконується умова case ADD_PERSON у якій ми викликаємо метод inputPersonData() який повертає форму яку заповнює користувача після чого ми викликаємо додавання господаря
+ * ЯКЩО menuOption 2 - то виконується умова case ADD_DOG у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та inputAddDogData() для додавання даних про собаку за заданим користувачем
+ * ЯКЩО menuOption 3 - то виконується умова case ADD_CAT у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та inputAddCatData() для додавання даних про кота за заданим користувачем
+ * ЯКЩО menuOption 4 - то виконується умова case DISCHARGE_DOG у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та clinicRepository.dischargeDog(...) для видалення сутності Dog з бази даних
+ * ЯКЩО menuOption 5 - то виконується умова case DISCHARGE_CAT у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та clinicRepository.dischargeCat(...) для видалення сутності Cat з бази даних
+ * ЯКЩО menuOption 6 - то виконується умова case SHOW_DOGS у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та dogRepository.showDogs(...) для виведення усіх собак пацієнтів даного користувача які наразі знаходяться в лікарні
+ * ЯКЩО menuOption 7 - то виконується умова case SHOW_CATS у якій ми викликаємо метод inputPersonEmailData() для знаходження емейлу користувача та clinicRepository.dischargeCat(...) для видалення сутності Cat з бази даних
+ */
 public class Ui {
     private final Scanner scanner;
     private final PersonRepository personRepository;

@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DogService extends AnimalService {
+    /**
+     * Метод addDog - метод класу DogService який знаходить у таблиці animal - id за medical_id_card та після дадає данні з animal id та type(з dog) в таблицю dogs
+     */
     public void addDog(Dog dog, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from animal where medical_id_card = ?");
         preparedStatement.setInt(1, dog.getMedicalCardId());
@@ -23,21 +26,9 @@ public class DogService extends AnimalService {
         preparedStatement.setString(2, dog.getType());
         preparedStatement.executeUpdate();
     }
-
-    public void dischargeDog(Person person, Dog dog, Connection connection) throws SQLException {
-        if (ValidateDogs.validateIfCurrentDogExist(dog.getMedicalCardId(), connection) && ValidateDogs.validateIfCurrentDogWithCurrentOwnerExist(person,dog.getMedicalCardId(),connection)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dogs WHERE animal_id = ?");
-            preparedStatement.setInt(1, dog.getAnimalId());
-            preparedStatement.executeUpdate();
-
-            preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
-            preparedStatement.setInt(1, dog.getAnimalId());
-            preparedStatement.executeUpdate();
-
-            System.out.println("THE DOG HAS BEEN DISCHARGED");
-        }
-    }
-
+    /**
+     * Метод showDogs - метод класу DogService який знаходить собак заданого користувача та виводить їх на екран
+     */
     public void showDogs(Person person, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("select * from clinic join dogs d on clinic.animal_id = d.animal_id join animal a on clinic.animal_id = a.id where owner_id = ?");
         preparedStatement.setInt(1, person.getId());

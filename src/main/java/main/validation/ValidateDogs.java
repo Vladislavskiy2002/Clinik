@@ -11,18 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateDogs {
-    public static Boolean validateIfCurrentDogExist(Integer medicalIdCard, Connection connection) throws SQLException {
-        String selectQuery = "SELECT * from animal join dogs c on animal.id = c.animal_id where medical_id_card = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setInt(1, medicalIdCard);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            return true;
-        } else {
-            System.out.println("Dog with current data isn't exist");
-        }
-        return false;
-    }
+    /**
+     * Метод validateIfCurrentDogWithCurrentOwnerExist - статичний метод класу ValidateDogs який перевіряє чи є в користувача задана собака
+     */
     public static Boolean validateIfCurrentDogWithCurrentOwnerExist(Person person, Integer medicalIdCard, Connection connection) throws SQLException {
         String selectQuery = "SELECT * from animal join dogs c on animal.id = c.animal_id join clinic c2 on c.animal_id = c2.animal_id where medical_id_card = ? and owner_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -36,6 +27,9 @@ public class ValidateDogs {
         }
         return false;
     }
+    /**
+     * Метод validateType - статичний метод класу ValidateDogs який валідує Type
+     */
     public static String validateType(Scanner scanner) {
         String type;
         Matcher matcher;

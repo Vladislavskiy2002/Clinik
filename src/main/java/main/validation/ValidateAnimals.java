@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateAnimals {
+    /**
+     * Метод validateName - статичний метод класу ValidateAnimals який валідує імя
+     */
     public static String validateName(Scanner scanner) {
         String name;
         Matcher matcher;
@@ -25,7 +28,9 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return name;
     }
-
+    /**
+     * Метод validateIll - статичний метод класу ValidateAnimals який валідує хворобу
+     */
     public static String validateIll(Scanner scanner) {
         String ill;
         Matcher matcher;
@@ -42,7 +47,9 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return ill;
     }
-
+    /**
+     * Метод validateRes - статичний метод класу ValidateAnimals який число яке ми вводимо в меню
+     */
     public static Integer validateRes(Scanner scanner) {
         String num;
         Matcher matcher;
@@ -59,7 +66,9 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(num);
     }
-
+    /**
+     * Метод validateIfCurrentCatExist - статичний метод класу ValidateAnimals який перевіряє за medicalIdCard чи існує кіт в таблиці
+     */
     public static Boolean validateIfCurrentCatExist(Integer medicalIdCard, Connection connection) throws SQLException {
         String selectQuery = "SELECT * from animal join cats c on animal.id = c.animal_id where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -72,7 +81,9 @@ public class ValidateAnimals {
         }
         return false;
     }
-
+    /**
+     * Метод validateAge - статичний метод класу ValidateAnimals який валідує число age
+     */
     public static Integer validateAge(Scanner scanner) {
         String age;
         Matcher matcher;
@@ -90,6 +101,9 @@ public class ValidateAnimals {
         return Integer.parseInt(age);
     }
 
+    /**
+     * Метод validateIfCurrentAnimalExist - статичний метод класу ValidateAnimals який перевіряє за medicalIdCard чи існує animal в таблиці
+     */
     public static Boolean validateIfCurrentAnimalExist(Integer medicalIdCard, Connection connection) throws SQLException {
         String selectQuery = "SELECT animal.id from animal where medical_id_card = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -105,7 +119,9 @@ public class ValidateAnimals {
         }
         return false;
     }
-
+    /**
+     * Метод validateMedicalCardId - статичний метод класу ValidateAnimals який валідує MedicalCardId
+     */
     public static Integer validateMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
         String medicalCardId = "";
         Matcher matcher;
@@ -122,7 +138,9 @@ public class ValidateAnimals {
         } while (!matcher.matches());
         return Integer.parseInt(medicalCardId);
     }
-
+    /**
+     * Метод validateOnExistMedicalCardId - статичний метод класу ValidateAnimals який перевіряє та валідує чи існує задана MedicalCardId
+     */
     public static Integer validateOnExistMedicalCardId(Scanner scanner, Connection connection) throws SQLException {
         Boolean isExist = true;
         Integer medicalCardId = 0;

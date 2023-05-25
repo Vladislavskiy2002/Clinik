@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidateOwners {
+    /**
+     * Метод validateSurname - статичний метод класу ValidateOwners який валідує Surname
+     */
     public static String validateSurname(Scanner scanner) {
         String name;
         Matcher matcher;
@@ -25,7 +28,9 @@ public class ValidateOwners {
         } while (!matcher.matches());
         return name;
     }
-
+    /**
+     * Метод validateEmail - статичний метод класу ValidateOwners який валідує Email
+     */
     public static String validateEmail(Scanner scanner) {
         String email;
         Matcher matcher;
@@ -42,7 +47,9 @@ public class ValidateOwners {
         } while (!matcher.matches());
         return email;
     }
-
+    /**
+     * Метод validateEmail - статичний метод класу ValidateOwners який перевіряє за email чи вказаний користувач існує
+     */
     public static Boolean validateIfCurrentOwnerExist(final String email, Connection connection) throws SQLException {
         String selectQuery = "SELECT email from owner where email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -54,7 +61,9 @@ public class ValidateOwners {
         }
         return false;
     }
-
+    /**
+     * Метод validateEmail - статичний метод класу ValidateOwners який перевіряє за email чи вказаний користувач неіснує
+     */
     public static Boolean validateIfCurrentOwnerIsNotExist(final String email, Connection connection) throws SQLException {
         String selectQuery = "SELECT email from owner where email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);

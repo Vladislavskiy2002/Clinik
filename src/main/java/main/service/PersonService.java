@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PersonService {
-
+    /**
+     * Метод addPerson - метод класу PersonService який додає користувача в таблицю owner
+     */
     public void addPerson(Connection connection, Person person) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into owner (name, surname,email) VALUES (?, ?, ?)")) {
@@ -21,7 +23,9 @@ public class PersonService {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Метод findPersonIdByEmail - метод класу PersonService який знаходить id користувача за його email
+     */
     public int findPersonIdByEmail(Person person, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from owner where email = ?");
         preparedStatement.setString(1, person.getEmail());

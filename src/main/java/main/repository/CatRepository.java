@@ -19,19 +19,25 @@ public class CatRepository {
         this.service = new CatService();
     }
 
+    /**
+     * Метод addCat - метод класу CatRepository який додає Котів
+     * У цьому методі ми викликаємо метод Util.addAnimal для передачі даних кота в таблицю animal та викликаємо метод service.addCat для передачі даних кота в таблицю cats
+     */
     public void addCat(Cat cat) throws SQLException {
         Util.addAnimal(cat, connection);
         service.addCat(cat, connection);
     }
-
+    /**
+     * Метод findCatIdByMedicalIdCard - метод класу CatRepository який викликає метод findAnimalIdByMedicalIdCard класу CatService
+     */
     public int findCatIdByMedicalIdCard(Cat cat, Connection connection) throws SQLException {
         return service.findAnimalIdByMedicalIdCard(cat, connection);
     }
 
-    public void dischargeCat(Person person, Cat cat, Connection connection) throws SQLException {
-        service.dischargeCat(person, cat, connection);
-    }
 
+    /**
+     * Метод showCats - метод класу CatRepository який викликає service.showCats
+     */
     public void showCats(Person person, Connection connection) throws SQLException {
         service.showCats(person, connection);
     }

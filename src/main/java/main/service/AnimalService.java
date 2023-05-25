@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AnimalService {
+    /**
+     * Метод findAnimalIdByMedicalIdCard - метод класу AnimalService який знаходить за medical_id_card - id з таблиці animal
+     */
     public int findAnimalIdByMedicalIdCard(Animal animal, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from animal where medical_id_card = ?");
         preparedStatement.setInt(1, animal.getMedicalCardId());

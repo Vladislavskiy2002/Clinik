@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Util {
+    /**
+     * Метод addAnimal - статичний метод класу Util який додає Animal до бази даних
+     */
     public static void addAnimal(Animal animal, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into animal (name, age, medical_id_card) VALUES (?, ?, ?)")) {

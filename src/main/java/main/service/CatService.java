@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CatService extends AnimalService {
+    /**
+     * Метод addCat - метод класу CatService який знаходить у таблиці animal - id за medical_id_card та після дадає данні з animal id та flying_dream(з cat) в таблицю cats
+     */
     public void addCat(Cat cat, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id from animal where medical_id_card = ?");
         preparedStatement.setInt(1, cat.getMedicalCardId());
@@ -25,21 +28,9 @@ public class CatService extends AnimalService {
         preparedStatement.setBoolean(2, cat.getFlyingDream());
         preparedStatement.executeUpdate();
     }
-
-    public void dischargeCat(Person person, Cat cat, Connection connection) throws SQLException {
-        if (ValidateDogs.validateIfCurrentDogWithCurrentOwnerExist(person,cat.getMedicalCardId(),connection)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cats WHERE animal_id = ?");
-            preparedStatement.setInt(1, cat.getAnimalId());
-            preparedStatement.executeUpdate();
-
-            preparedStatement = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
-            preparedStatement.setInt(1, cat.getAnimalId());
-            preparedStatement.executeUpdate();
-
-            System.out.println("THE CAT HAS BEEN DISCHARGED");
-        }
-    }
-
+    /**
+     * Метод showCats - метод класу CatService який знаходить котів заданого користувача та виводить їх на екран
+     */
     public void showCats(Person person, Connection connection) throws SQLException {
         String selectQuery = "select * from clinic join cats d on clinic.animal_id = d.animal_id join animal a on clinic.animal_id = a.id where owner_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
